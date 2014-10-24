@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PCategoria/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="PMyWidget/MainWindow.cs">
     <Files>
-      <File FileName="PCategoria/Program.cs" Line="1" Column="1" />
-      <File FileName="PCategoria/MainWindow.cs" Line="20" Column="3" />
-      <File FileName="../PCategoria/PCategoria/MainWindow.cs" Line="1" Column="1" />
+      <File FileName="PMyWidget/Program.cs" Line="1" Column="1" />
+      <File FileName="PMyWidget/PersonaView.cs" Line="2" Column="11" />
+      <File FileName="PMyWidget/MainWindow.cs" Line="9" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
