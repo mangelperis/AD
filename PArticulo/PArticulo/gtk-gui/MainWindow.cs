@@ -11,6 +11,16 @@ public partial class MainWindow
 	private global::Gtk.Action newCategoria;
 	private global::Gtk.Action refreshCategoria;
 	private global::Gtk.Action refreshArticulo;
+	private global::Gtk.Action newCategoria1;
+	private global::Gtk.Action refreshAction;
+	private global::Gtk.Action editarCat;
+	private global::Gtk.Action deleteCat;
+	private global::Gtk.Action newArticulo1;
+	private global::Gtk.Action refreshAction1;
+	private global::Gtk.Action editarArt;
+	private global::Gtk.Action deleteArt;
+	private global::Gtk.Action refreshArticulo1;
+	private global::Gtk.Action refreshCat;
 	private global::Gtk.VBox vbox5;
 	private global::Gtk.Notebook notebook2;
 	private global::Gtk.VBox vbox6;
@@ -46,6 +56,26 @@ public partial class MainWindow
 		w1.Add (this.refreshCategoria, null);
 		this.refreshArticulo = new global::Gtk.Action ("refreshArticulo", null, null, "gtk-refresh");
 		w1.Add (this.refreshArticulo, null);
+		this.newCategoria1 = new global::Gtk.Action ("newCategoria1", null, null, "gtk-new");
+		w1.Add (this.newCategoria1, null);
+		this.refreshAction = new global::Gtk.Action ("refreshAction", null, null, "gtk-refresh");
+		w1.Add (this.refreshAction, null);
+		this.editarCat = new global::Gtk.Action ("editarCat", null, null, "gtk-find-and-replace");
+		w1.Add (this.editarCat, null);
+		this.deleteCat = new global::Gtk.Action ("deleteCat", null, null, "gtk-delete");
+		w1.Add (this.deleteCat, null);
+		this.newArticulo1 = new global::Gtk.Action ("newArticulo1", null, null, "gtk-new");
+		w1.Add (this.newArticulo1, null);
+		this.refreshAction1 = new global::Gtk.Action ("refreshAction1", null, null, "gtk-refresh");
+		w1.Add (this.refreshAction1, null);
+		this.editarArt = new global::Gtk.Action ("editarArt", null, null, "gtk-find-and-replace");
+		w1.Add (this.editarArt, null);
+		this.deleteArt = new global::Gtk.Action ("deleteArt", null, null, "gtk-delete");
+		w1.Add (this.deleteArt, null);
+		this.refreshArticulo1 = new global::Gtk.Action ("refreshArticulo1", null, null, "gtk-refresh");
+		w1.Add (this.refreshArticulo1, null);
+		this.refreshCat = new global::Gtk.Action ("refreshCat", null, null, "gtk-refresh");
+		w1.Add (this.refreshCat, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -59,13 +89,13 @@ public partial class MainWindow
 		this.notebook2 = new global::Gtk.Notebook ();
 		this.notebook2.CanFocus = true;
 		this.notebook2.Name = "notebook2";
-		this.notebook2.CurrentPage = 1;
+		this.notebook2.CurrentPage = 0;
 		// Container child notebook2.Gtk.Notebook+NotebookChild
 		this.vbox6 = new global::Gtk.VBox ();
 		this.vbox6.Name = "vbox6";
 		this.vbox6.Spacing = 6;
 		// Container child vbox6.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar3'/></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar3'><toolitem name='newArticulo1' action='newArticulo1'/><toolitem name='refreshArticulo1' action='refreshArticulo1'/><toolitem name='editarArt' action='editarArt'/><toolitem name='deleteArt' action='deleteArt'/></toolbar></ui>");
 		this.toolbar3 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar3")));
 		this.toolbar3.Name = "toolbar3";
 		this.toolbar3.ShowArrow = false;
@@ -98,7 +128,7 @@ public partial class MainWindow
 		this.vbox7.Name = "vbox7";
 		this.vbox7.Spacing = 6;
 		// Container child vbox7.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar4'/></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar4'><toolitem name='newCategoria1' action='newCategoria1'/><toolitem name='refreshCat' action='refreshCat'/><toolitem name='editarCat' action='editarCat'/><toolitem name='deleteCat' action='deleteCat'/></toolbar></ui>");
 		this.toolbar4 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar4")));
 		this.toolbar4.Name = "toolbar4";
 		this.toolbar4.ShowArrow = false;
@@ -140,5 +170,15 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.refreshCategoria.Activated += new global::System.EventHandler (this.OnRefreshCategoriaActivated);
+		this.newCategoria1.Activated += new global::System.EventHandler (this.OnNewCategoria1Activated);
+		this.refreshAction.Activated += new global::System.EventHandler (this.OnRefreshActionActivated);
+		this.editarCat.Activated += new global::System.EventHandler (this.OnEditarCatActivated);
+		this.deleteCat.Activated += new global::System.EventHandler (this.OnDeleteCatActivated);
+		this.newArticulo1.Activated += new global::System.EventHandler (this.OnNewArticulo1Activated);
+		this.refreshAction1.Activated += new global::System.EventHandler (this.OnRefreshAction1Activated);
+		this.editarArt.Activated += new global::System.EventHandler (this.OnEditarArtActivated);
+		this.deleteArt.Activated += new global::System.EventHandler (this.OnDeleteArtActivated);
+		this.refreshArticulo1.Activated += new global::System.EventHandler (this.OnRefreshArticulo1Activated);
+		this.refreshCat.Activated += new global::System.EventHandler (this.OnRefreshCatActivated);
 	}
 }

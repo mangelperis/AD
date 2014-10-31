@@ -51,45 +51,65 @@
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-refresh</property>
       </action>
-      <action id="newAction">
+      <action id="newCategoria1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-new</property>
+        <signal name="Activated" handler="OnNewCategoria1Activated" />
       </action>
       <action id="refreshAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshActionActivated" />
       </action>
-      <action id="findAndReplaceAction">
+      <action id="editarCat">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-find-and-replace</property>
+        <signal name="Activated" handler="OnEditarCatActivated" />
       </action>
-      <action id="deleteAction1">
+      <action id="deleteCat">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-delete</property>
+        <signal name="Activated" handler="OnDeleteCatActivated" />
       </action>
-      <action id="newAction2">
+      <action id="newArticulo1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-new</property>
+        <signal name="Activated" handler="OnNewArticulo1Activated" />
       </action>
       <action id="refreshAction1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshAction1Activated" />
       </action>
-      <action id="findAndReplaceAction1">
+      <action id="editarArt">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-find-and-replace</property>
+        <signal name="Activated" handler="OnEditarArtActivated" />
       </action>
-      <action id="deleteAction">
+      <action id="deleteArt">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-delete</property>
+        <signal name="Activated" handler="OnDeleteArtActivated" />
+      </action>
+      <action id="refreshArticulo1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshArticulo1Activated" />
+      </action>
+      <action id="refreshCat">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshCatActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -104,7 +124,7 @@
           <widget class="Gtk.Notebook" id="notebook2">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">0</property>
             <child>
               <widget class="Gtk.VBox" id="vbox6">
                 <property name="MemberName" />
@@ -114,10 +134,10 @@
                     <property name="MemberName" />
                     <property name="ShowArrow">False</property>
                     <node name="__gtksharp_133_Stetic_Editor_ActionToolbar" type="Toolbar">
-                      <node type="Toolitem" action="newAction2" />
-                      <node type="Toolitem" action="refreshAction1" />
-                      <node type="Toolitem" action="findAndReplaceAction1" />
-                      <node type="Toolitem" action="deleteAction" />
+                      <node type="Toolitem" action="newArticulo1" />
+                      <node type="Toolitem" action="refreshArticulo1" />
+                      <node type="Toolitem" action="editarArt" />
+                      <node type="Toolitem" action="deleteArt" />
                     </node>
                   </widget>
                   <packing>
@@ -167,10 +187,10 @@
                     <property name="MemberName" />
                     <property name="ShowArrow">False</property>
                     <node name="__gtksharp_133_Stetic_Editor_ActionToolbar" type="Toolbar">
-                      <node type="Toolitem" action="newAction" />
-                      <node type="Toolitem" action="refreshAction" />
-                      <node type="Toolitem" action="findAndReplaceAction" />
-                      <node type="Toolitem" action="deleteAction1" />
+                      <node type="Toolitem" action="newCategoria1" />
+                      <node type="Toolitem" action="refreshCat" />
+                      <node type="Toolitem" action="editarCat" />
+                      <node type="Toolitem" action="deleteCat" />
                     </node>
                   </widget>
                   <packing>
