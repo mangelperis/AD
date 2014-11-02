@@ -2,7 +2,7 @@ using System;
 using Gtk;
 using System.Data;
 
-
+using PArticulo;
 using SerpisAd;
 
 public partial class MainWindow: Gtk.Window
@@ -37,7 +37,7 @@ public partial class MainWindow: Gtk.Window
 		listStore.AppendValues (valor);
 		treeviewCategoria.Model = listStore;*/
 
-
+		//BOTONES EDITAR Y ELIMINAR
 		deleteArt.Sensitive = false;
 		deleteCat.Sensitive = false;
 		editarArt.Sensitive = false;
@@ -53,6 +53,15 @@ public partial class MainWindow: Gtk.Window
 		listStoreArt = new ListStore (typeof(string), typeof(string), typeof(string), typeof(string));
 		treeviewArticulo.Model = listStoreArt;
 
+			//SELECCION 
+			treeviewArticulo.Selection.Changed += delegate {
+				bool hasSelected = treeviewArticulo.Selection.CountSelectedRows() > 0;
+				deleteArt.Sensitive = hasSelected;
+				editarArt.Sensitive = hasSelected;
+			};
+
+
+
 		//CATEGORIA
 		treeviewCategoria.AppendColumn ("ID", new CellRendererText (), "text", 0);
 		treeviewCategoria.AppendColumn ("Nombre", new CellRendererText (), "text", 1);
@@ -61,19 +70,16 @@ public partial class MainWindow: Gtk.Window
 		listStoreCat = new ListStore (typeof(string), typeof(string));
 		treeviewCategoria.Model = listStoreCat;
 
-		//TODO SELECCION
-		/*treeView.Selection.Changed += selectionChanged;
-		treeView.Selection.Changed += selectionChanged;*/
+			//SELECCION
+			treeviewCategoria.Selection.Changed += delegate {
+				bool hasSelected = treeviewCategoria.Selection.CountSelectedRows() > 0;
+				deleteCat.Sensitive = hasSelected;
+				editarCat.Sensitive = hasSelected;
+			};
+
 
 	}
-	//TODO SELECCION
-	/*
-	private void selectionChangedArt (object sender, EventArgs e) {
-		Console.WriteLine ("selectionChanged");
-		bool hasSelected = treeView.Selection.CountSelectedRows () > 0;
-		deleteAction.Sensitive = hasSelected;
-		editAction.Sensitive = hasSelected;
-	}*/
+	//BOTON REFRESH
 
 	private void fillListStoreArt() {
 		IDbCommand dbCommand = dbConnection.CreateCommand ();
@@ -104,12 +110,95 @@ public partial class MainWindow: Gtk.Window
 		dataReader.Close ();
 	}
 
-
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+	//BOTON BORRAR 
+	protected void OnDeleteArtActivated (object sender, EventArgs e)
 	{
-		Application.Quit ();
-		a.RetVal = true;
+		TreeIter treeIter;
+		treeviewArticulo.Selection.GetSelected (out treeIter);
+		object id=listStoreArt.GetValue (treeIter, 0);
+
+		string pregunta = "¿Borrar el registro '{0}'?";
+		pregunta = string.Format(pregunta, id); 
+
+
+		if (Confirm(pregunta)) {
+
+			IDbCommand mySqlCommand = dbConnection.CreateCommand ();
+			string deleteSql = "DELETE FROM articulo WHERE id = '{0}'";
+			deleteSql= string.Format(deleteSql, id);
+			mySqlCommand.CommandText = deleteSql;
+			mySqlCommand.ExecuteNonQuery ();
+
+		} 
 	}
+
+	protected void OnDeleteCatActivated (object sender, EventArgs e)
+	{
+		TreeIter treeIter;
+		treeviewCategoria.Selection.GetSelected (out treeIter);
+		object id=listStoreCat.GetValue (treeIter, 0);
+
+		string pregunta = "¿Borrar  el registro '{0}'?";
+		pregunta = string.Format(pregunta, id); 
+
+
+		if (Confirm(pregunta)) {
+
+			IDbCommand mySqlCommand = dbConnection.CreateCommand ();
+			string deleteSql = "DELETE FROM categoria WHERE id = '{0}'";
+			deleteSql= string.Format(deleteSql, id);
+			mySqlCommand.CommandText = deleteSql;
+			mySqlCommand.ExecuteNonQuery ();
+
+		} 
+	}
+	//PARTE DEL DIALOGO DE 'CONFIRMAR'  PARA BORRAR
+	public bool Confirm(string text){
+		MessageDialog messageDialog = new MessageDialog (
+			this,
+			DialogFlags.Modal,
+			MessageType.Question,
+			ButtonsType.YesNo,
+			text
+			);
+		messageDialog.Title = Title;
+		ResponseType result = (ResponseType)messageDialog.Run ();
+		messageDialog.Destroy ();
+		return result == ResponseType.Yes;
+	}
+
+
+
+	//BOTON AÑADIR
+
+	protected void OnNewArticulo1Activated (object sender, EventArgs e)
+	{
+
+		string insertSql = string.Format(
+			"INSERT INTO articulo (nombre) VALUES ('{0}')", "Nuevo ART: " + DateTime.Now
+			);
+
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
+		dbCommand.CommandText = insertSql;
+
+		dbCommand.ExecuteNonQuery ();
+		Console.WriteLine ("Registro Añadido. SQL :: {0}", insertSql);
+
+	}
+	protected void OnNewCategoria1Activated (object sender, EventArgs e)
+	{
+		string insertSql = string.Format(
+			"INSERT INTO categoria (nombre) VALUES ('{0}')", "Nueva CAT: " + DateTime.Now
+			);
+
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
+		dbCommand.CommandText = insertSql;
+
+		dbCommand.ExecuteNonQuery ();
+		Console.WriteLine ("Registro Añadido. SQL :: {0}", insertSql);
+	}
+
+	// BOTON REFRESH
 
 
 	protected void OnRefreshArticulo1Activated (object sender, EventArgs e)
@@ -124,7 +213,7 @@ public partial class MainWindow: Gtk.Window
 		fillListStoreCat ();
 	}
 	// ESTOS 3 METODOS ME TOCA DECLARARLOS VACIOS PORQUE SE VE QUE MES LOS HA GUARDADO DE ANTES A LA HORA DE CONSTRUIR
-	// Y SI NO DA ERROR SI NO LOS ENCUENTRA
+	// Y SI NO DA ERROR SI NO LOS ENCUENTRA. NO LOS PUEDO BORRAR
 	protected void OnRefreshCategoriaActivated (object sender, EventArgs e)
 	{
 	}
@@ -135,49 +224,31 @@ public partial class MainWindow: Gtk.Window
 	{}
      //	
 
-
-	protected void OnNewArticulo1Activated (object sender, EventArgs e)
-	{
-
-		/*string insertSql = string.Format(
-			"insert into articulo (nombre,categoria,precio) values ('uno','dos','tres')"
-			);
-		Console.WriteLine ("insertSql={0}", insertSql);
-		IDbCommand dbCommand = dbConnection.CreateCommand ();
-		dbCommand.CommandText = insertSql;
-
-		dbCommand.ExecuteNonQuery ();*/
-		Console.WriteLine ("TODO");
-
-	}
-	protected void OnNewCategoria1Activated (object sender, EventArgs e)
-	{
-		Console.WriteLine ("TODO");
-	}
-
-
-
+	// BOTON EDITAR
 	protected void OnEditarArtActivated (object sender, EventArgs e)
 	{
-		Console.WriteLine ("TODO");
+		TreeIter treeIter;
+		treeviewArticulo.Selection.GetSelected (out treeIter);
+		object id = listStoreArt.GetValue (treeIter, 0);
+		new ArticuloWindow (id);
 	}
 
 	protected void OnEditarCatActivated (object sender, EventArgs e)
 	{
-		Console.WriteLine ("TODO");
+		TreeIter treeIter;
+		treeviewCategoria.Selection.GetSelected (out treeIter);
+		object id = listStoreCat.GetValue (treeIter, 0);
+		new CategoriaWindow (id);
+	}
+
+	//CLOSE APP
+	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+	{		//CERRAR CONEXION CON BDD
+			dbConnection.Close ();
+		Application.Quit ();
+		a.RetVal = true;
 	}
 
 
 
-	protected void OnDeleteArtActivated (object sender, EventArgs e)
-	{
-		Console.WriteLine ("TODO");
-	}
-
-
-
-	protected void OnDeleteCatActivated (object sender, EventArgs e)
-	{
-		Console.WriteLine ("TODO");
-	}
 }
