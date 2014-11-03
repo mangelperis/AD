@@ -48,9 +48,16 @@ public partial class MainWindow: Gtk.Window
 		treeviewArticulo.AppendColumn ("ID", new CellRendererText (), "text", 0);
 		treeviewArticulo.AppendColumn ("Nombre", new CellRendererText (), "text", 1);
 		treeviewArticulo.AppendColumn ("Categoria", new CellRendererText (), "text", 2);
-		treeviewArticulo.AppendColumn ("Precio", new CellRendererText (), "text", 3);
+		//treeviewArticulo.AppendColumn ("Precio", new CellRendererText (), "text", 3);
+		treeviewArticulo.AppendColumn ("precio", new CellRendererText (), 
+		                               new TreeCellDataFunc (delegate(TreeViewColumn tree_column, CellRenderer cell, 
+					                   TreeModel tree_model , TreeIter iter) {
+			CellRendererText cellRendererText = (CellRendererText)cell;
+			object value = tree_model.GetValue (iter, 3);
+			cellRendererText.Text = value != DBNull.Value ? value.ToString () : "null";
+		}));
 
-		listStoreArt = new ListStore (typeof(string), typeof(string), typeof(string), typeof(string));
+		listStoreArt = new ListStore (typeof(string), typeof(string), typeof(string), typeof(decimal));//typeof(string) -> precio
 		treeviewArticulo.Model = listStoreArt;
 
 			//SELECCION 
@@ -90,7 +97,7 @@ public partial class MainWindow: Gtk.Window
 			object id = dataReader ["id"].ToString();
 			object nombre = dataReader ["nombre"];
 			object categoria = dataReader ["categoria"].ToString();
-			object precio = dataReader ["precio"].ToString();
+			object precio = dataReader ["precio"];//QUITAR TO STRING para solucion 2
 			listStoreArt.AppendValues (id, nombre, categoria,precio);
 		}
 		dataReader.Close ();
